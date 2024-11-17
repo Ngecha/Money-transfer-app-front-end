@@ -1,10 +1,11 @@
 import React from 'react';
-import TopNav from '../components/TopNav';
+import TopNav from '../components/Navbar';
 import LeftNav from '../components/LeftNav';
-import WalletCard from '../components/WalletCard';
-import BeneficiariesCard from '../components/BeneficiariesCard';
-import RecentTransactionsCard from '../components/RecentTransactionsCard';
-import AnalyticsCard from '../components/AnalyticsCard';
+//import WalletCard from '../components/dashboard/WalletCard';
+import BeneficiariesCard from '../components/dashboard/BeneficiariesCard';
+import RecentTransactionsCard from '../components/dashboard/RecentTransactionsCard';
+import AnalyticsCard from '../components/dashboard/AnalyticsCard';
+import WalletCard from '../components/dashboard/WalletCard';
 
 export default function DashboardPage({ userId }) {
   return (
@@ -16,7 +17,7 @@ export default function DashboardPage({ userId }) {
           <h2 className="text-3xl font-bold mb-6">Dashboard</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <WalletCard userId={userId} />
+            <WalletCard/>
             <BeneficiariesCard />
             <RecentTransactionsCard />
           </div>

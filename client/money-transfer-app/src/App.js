@@ -1,15 +1,42 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import DashboardPage from './pages/DashboardPage';
+import React, { useState, useEffect } from "react";
+import { Outlet,useNavigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Cookies from "js-cookie";
 
-export default function App() {
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const user = Cookies.get("username");
+    if (user) {
+      setIsAuthenticated(true);
+      setUsername(user);
+    }
+  }, []);
+
+  const handleLogin = (loggedInUser) => {
+    setIsAuthenticated(true);
+    setUsername(loggedInUser);
+    Cookies.set("username", loggedInUser);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUsername(null);
+    Cookies.remove("username");
+    navigate("/")
+  };
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-      </Routes>
-    </Router>
+    <div>
+      <Navbar isAuthenticated={isAuthenticated} username={username} handleLogout={handleLogout} />
+      <div className="content">
+        <Outlet context={{ handleLogin, isAuthenticated, username }} /> 
+      </div>
+    </div>
   );
-}
+};
+
+export default App;
